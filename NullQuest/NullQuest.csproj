@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3CE52232-C1DD-43E6-AF3E-68A4862F2646}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NullQuest</RootNamespace>
+    <AssemblyName>NullQuest</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BadSnowstorm, Version=0.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\BadSnowstorm.0.0.1\lib\net40\BadSnowstorm.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="XSerializer">
+      <HintPath>..\packages\XSerializer.0.1.6\lib\net40\XSerializer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\DeterministicDungeonNameGenerator.cs" />
+    <Compile Include="Data\FileAccess.cs" />
+    <Compile Include="Data\FileSystemSaveGameRepository.cs" />
+    <Compile Include="Data\HardCodedAsciiArtRepository.cs" />
+    <Compile Include="Data\HardCodedItemDataRepository.cs" />
+    <Compile Include="Data\HardCodedMonsterDataRepository.cs" />
+    <Compile Include="Data\HardCodedSpellDataRepository.cs" />
+    <Compile Include="Data\HardCodedWeaponDataRepository.cs" />
+    <Compile Include="Data\IAsciiArtRepository.cs" />
+    <Compile Include="Data\IDungeonNameGenerator.cs" />
+    <Compile Include="Data\IFileAccess.cs" />
+    <Compile Include="Data\IItemDataRepository.cs" />
+    <Compile Include="Data\IMonsterDataRepository.cs" />
+    <Compile Include="Data\ISpellDataRepository.cs" />
+    <Compile Include="Data\IWeaponDataRepository.cs" />
+    <Compile Include="Game\Combat\Attack.cs" />
+    <Compile Include="Game\Combat\CastSpell.cs" />
+    <Compile Include="Game\Combat\Combatant.cs" />
+    <Compile Include="Game\Combat\CombatantSelector.cs" />
+    <Compile Include="Game\Combat\CombatOutcome.cs" />
+    <Compile Include="Game\Combat\CombatLogEntry.cs" />
+    <Compile Include="Game\Combat\CombatLogEntryFromAction.cs" />
+    <Compile Include="Game\Combat\DamageType.cs" />
+    <Compile Include="Game\Combat\EffectArchetype.cs" />
+    <Compile Include="Game\Combat\Flee.cs" />
+    <Compile Include="Game\Combat\ICombatAction.cs" />
+    <Compile Include="Game\Combat\CombatContext.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\CombatRoundResult.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\DamageCalculator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\CombatEngine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\ItemArchetype.cs" />
+    <Compile Include="Game\Combat\MonsterArchetype.cs" />
+    <Compile Include="Game\Combat\MonsterModifier.cs" />
+    <Compile Include="Game\Combat\SpellArchetype.cs" />
+    <Compile Include="Game\Combat\UseItem.cs" />
+    <Compile Include="Game\Combat\WeaponArchetype.cs" />
+    <Compile Include="Game\Effects\EffectFactory.cs" />
+    <Compile Include="Game\Effects\EffectOutcome.cs" />
+    <Compile Include="Game\Effects\IEffect.cs" />
+    <Compile Include="Game\Effects\IEffectFactory.cs" />
+    <Compile Include="Game\Effects\Library\RestoreEnergyEffect.cs" />
+    <Compile Include="Game\Effects\Library\DamageHealthEffect.cs" />
+    <Compile Include="Game\Effects\Library\RestoreHealthEffect.cs" />
+    <Compile Include="Game\Effects\NonCombatEffect.cs" />
+    <Compile Include="Game\Extensions\LinqExtensions.cs" />
+    <Compile Include="Game\Extensions\MathExtensions.cs" />
+    <Compile Include="Game\Extensions\ModifierExtensions.cs" />
+    <Compile Include="Game\Extensions\NameExtensions.cs" />
+    <Compile Include="Game\Factories\IItemFactory.cs" />
+    <Compile Include="Game\Factories\IMonsterFactory.cs" />
+    <Compile Include="Game\Factories\ISpellFactory.cs" />
+    <Compile Include="Game\Factories\ItemFactory.cs" />
+    <Compile Include="Game\Factories\IWeaponFactory.cs" />
+    <Compile Include="Game\Factories\MonsterFactory.cs" />
+    <Compile Include="Game\Factories\SpellFactory.cs" />
+    <Compile Include="Game\Factories\WeaponFactory.cs" />
+    <Compile Include="Game\IHasDescription.cs" />
+    <Compile Include="Game\IHasLevel.cs" />
+    <Compile Include="Game\IHasName.cs" />
+    <Compile Include="Game\Items\CombatItem.cs" />
+    <Compile Include="Game\Combat\Weapon.cs" />
+    <Compile Include="Game\Combat\WeaponType.cs" />
+    <Compile Include="Dungeon\DungeonController.cs" />
+    <Compile Include="Dungeon\DungeonView.cs" />
+    <Compile Include="Dungeon\DungeonViewModel.cs" />
+    <Compile Include="Game\IContext.cs" />
+    <Compile Include="Game\Items\IItem.cs" />
+    <Compile Include="Game\Items\NonCombatItem.cs" />
+    <Compile Include="Game\Items\Scroll.cs" />
+    <Compile Include="Game\NonCombatContext.cs" />
+    <Compile Include="Game\Range.cs" />
+    <Compile Include="Game\Spells\CombatSpell.cs" />
+    <Compile Include="Game\Spells\ISpell.cs" />
+    <Compile Include="Game\Spells\NonCombatSpell.cs" />
+    <Compile Include="Game\StatsView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\StatsViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Inn\InnController.cs" />
+    <Compile Include="Inn\InnView.cs" />
+    <Compile Include="Inn\InnViewModel.cs" />
+    <Compile Include="Inventory\InventoryController.cs" />
+    <Compile Include="Game\Magnitude.cs" />
+    <Compile Include="Game\Monster.cs" />
+    <Compile Include="Game\MonsterClass.cs" />
+    <Compile Include="Game\StatModifier.cs" />
+    <Compile Include="Game\Combat\IActionSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\IAttackCalculator.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\ICombatantSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\ICombatEngine.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\IPauser.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\MonsterActionSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Combat\PlayerActionSelector.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dungeon\CombatController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dungeon\CombatView.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dungeon\CombatViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Inventory\InventoryView.cs" />
+    <Compile Include="Inventory\InventoryViewModel.cs" />
+    <Compile Include="IStatsGenerator.cs" />
+    <Compile Include="NinjectControllerFactory.cs" />
+    <Compile Include="Data\HardCodedGameDataRepository.cs" />
+    <Compile Include="Data\IGameDataRepository.cs" />
+    <Compile Include="Data\ISaveGameRepository.cs" />
+    <Compile Include="Data\SaveGameData.cs" />
+    <Compile Include="Game\Player.cs" />
+    <Compile Include="Game\CharacterStats.cs" />
+    <Compile Include="Game\Class.cs" />
+    <Compile Include="Game\Dice.cs" />
+    <Compile Include="Game\GameWorld.cs" />
+    <Compile Include="Game\IDice.cs" />
+    <Compile Include="Game\Race.cs" />
+    <Compile Include="Game\Skill.cs" />
+    <Compile Include="Game\StatsGenerator.cs" />
+    <Compile Include="MainMenu\GameLaunchedController.cs" />
+    <Compile Include="MainMenu\LoadGameController.cs" />
+    <Compile Include="MainMenu\MainMenuView.cs" />
+    <Compile Include="MainMenu\MainMenuViewModel.cs" />
+    <Compile Include="MainMenu\NewGameController.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screens\SplashScreen.cs" />
+    <Compile Include="SpellBook\SpellBookController.cs" />
+    <Compile Include="SpellBook\SpellBookView.cs" />
+    <Compile Include="SpellBook\SpellBookViewModel.cs" />
+    <Compile Include="Store\StoreController.cs" />
+    <Compile Include="Store\StoreView.cs" />
+    <Compile Include="Store\StoreViewModel.cs" />
+    <Compile Include="Strings1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Town\TownView.cs" />
+    <Compile Include="Town\TownViewModel.cs" />
+    <Compile Include="Town\TownController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Strings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,59 @@
+﻿using NullQuest.Game.Items;
+using System;
+
+namespace NullQuest.Game.Combat
+{
+    public class Weapon : NonCombatItem
+    {
+        public static readonly Weapon BareHands =
+            new Weapon
+            {
+                WeaponType = WeaponType.Melee,
+                DamageType = DamageType.Normal,
+                Damage =
+                    new Magnitude
+                    {
+                        BaseAmount = 1,
+                        NumberOfDice = 1,
+                        NumberOfSides = 4
+                    }
+            };
+
+        public Weapon()
+        {
+        }
+
+        public Weapon(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Argument, 'name', cannot be null, empty or all whitespace.", "name");
+            }
+
+            Name = name;
+        }
+
+        public override void Use(Combatant combatant)
+        {
+            if (combatant.Weapon != BareHands)
+            {
+                combatant.Inventory.Add(combatant.Weapon);
+            }
+
+            combatant.Inventory.Remove(this);
+            combatant.Weapon = this;
+        }
+
+        public override bool CanUse(Combatant combatant, IContext context)
+        {
+            return !context.IsCombat && base.CanUse(combatant, context) && combatant.Strength >= RequiredStrength;
+        }
+
+        public string Name { get; set; }
+        public WeaponType WeaponType { get; set; }
+        public DamageType DamageType { get; set; }
+        public Magnitude Damage { get; set; }
+        public int RequiredStrength { get; set; }
+        public int Level { get; set; }
+    }
+}

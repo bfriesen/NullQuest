@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>XSerializer</id>
+    <version>0.1.6</version>
+    <title>XSerializer - Serialize *anything*</title>
+    <authors>Brian Friesen</authors>
+    <owners>Brian Friesen</owners>
+    <licenseUrl>https://github.com/QuickenLoans/XSerializer/blob/master/LICENSE.md</licenseUrl>
+    <projectUrl>https://github.com/QuickenLoans/XSerializer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A .NET XML serializer that serializes and deserializes interfaces, dictionaries, dynamic, and collections.</description>
+    <summary>A .NET XML serializer that serializes and deserializes interfaces, dictionaries, dynamic, and collections.</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>xmlserializer xmlserialization xmlserialize serializer serialization serialize xml interface dynamic dictionary</tags>
+    <references>
+      <reference file="XSerializer.dll" />
+    </references>
+  </metadata>
+</package>

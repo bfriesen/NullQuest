@@ -1,0 +1,65 @@
+﻿using NullQuest.Game.Combat;
+using NullQuest.Game.Extensions;
+using NullQuest.Game.Spells;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml.Serialization;
+
+namespace NullQuest.Game.Items
+{
+    public class Scroll : INonCombatItem
+    {
+        public ISpell Spell { get; set; }
+
+        [XmlIgnore]
+        public string Name
+        {
+            get { return string.Format("Spell: {0}", Spell.GetLeveledName()); }
+            set { throw new NotSupportedException("Scroll.Name should never be set - its Name getter returns its Spell Name."); }
+        }
+
+        public int Quantity { get; set; }
+        public int Level { get; set; }
+
+        public CombatLogEntry Use(IDice dice, Combatant combatant)
+        {
+            combatant.AddSpellToSpellBook(Spell);
+            combatant.RemoveItemFromInventory(this);
+
+            return null;
+        }
+
+        public bool CanUse(Combatant combatant, IContext context)
+        {
+            return !context.IsCombat
+                && combatant.Inventory.Any(x => ReferenceEquals(x, this))
+                && Quantity > 0
+                && combatant.Intelligence >= Spell.RequiredIntelligence;
+        }
+
+        public CombatOutcome GetPotentialCombatOutcome(Combatant attacker)
+        {
+            return CombatOutcome.Empty;
+        }
+
+        public bool Equals(IItem other)
+        {
+            var otherScroll = other as Scroll;
+            if (otherScroll == null)
+            {
+                return false;
+            }
+
+            return ((ISpell)Spell).Equals((ISpell)otherScroll.Spell);
+        }
+
+        public string GetDescription()
+        {
+            var sb = new StringBuilder();
+            sb.AppendFormat("{0}", Spell.GetDescription()).AppendLine();
+            return sb.ToString();
+        }
+    }
+}

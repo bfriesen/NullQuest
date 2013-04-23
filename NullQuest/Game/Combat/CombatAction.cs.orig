@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace NullQuest.Game.Combat
+{
+    public interface ICombatAction
+    {
+        string Name { get; }
+        void Execute(IDice dice, Combatant attacker, Combatant defender, IList<CombatLogEntry> combatLog);
+        PotentialCombatEffect GetPotentialCombatEffect(Combatant attacker);
+    }
+
+    public class Attack : ICombatAction
+    {
+        private readonly string text;
+
+        public Attack(string text)
+        {
+            this.text = text;
+        }
+
+        public string Name
+        {
+            get { return text; }
+        }
+
+        public void Execute(IDice dice, Combatant attacker, Combatant defender, IList<CombatLogEntry> combatLog)
+        {
+            int attack = attacker.ToHitAttack;
+            int defend = defender.ToHitDefense;
+
+            var toHitThreshold = Math.Min(Math.Max(attack / ((double)attack + defend), 0.05), 0.95);
+
+            if (dice.Random() < toHitThreshold)
+            {
+                var damage = attacker.GetAttackDamage(dice);
+                defender.CurrentHitPoints -= damage;
+                combatLog.Add(new CombatLogEntry { Text = string.Format("{0} hits {1} with {2} for {3} points!", attacker.Name, defender.Name, Name, damage) });
+            }
+            else
+            {
+                combatLog.Add(new CombatLogEntry { Text = string.Format("{0} attempts to hit {1} with {2} and fails miserably!", attacker.Name, defender.Name, Name) });
+            }
+
+            //var attackerAdvantage = attacker.
+            // Was it successful?
+            // if(attacker.TryToHit(target))
+            // if(target.WereYouHitBy(attacker))
+
+            // if not done / false
+            // if yes we need to deal damage
+            // done / true
+        }
+
+        public PotentialCombatEffect GetPotentialCombatEffect(Combatant attacker)
+        {
+            return new PotentialCombatEffect
+            {
+                Damage = attacker.Weapon.Damage.GetAverageValue() + attacker.Strength.GetStatModifier()
+            };
+        }
+    }
+}
+
+// Attack
+// Use Item
+// Flee
+// Cast Spell
