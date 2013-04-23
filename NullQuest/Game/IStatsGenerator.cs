@@ -1,6 +1,4 @@
-﻿using NullQuest.Game;
-
-namespace NullQuest
+namespace NullQuest.Game
 {
     public interface IStatsGenerator
     {
