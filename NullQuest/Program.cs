@@ -9,6 +9,7 @@ using BadSnowstorm;
 using Ninject;
 using NullQuest.Data;
 using NullQuest.Game.Combat;
+using NullQuest.DependencyInjection;
 
 namespace NullQuest
 {
@@ -18,8 +19,8 @@ namespace NullQuest
         {
             ConfigureConsole();
 
-            //var kernel = GetNinjectKernel();
-            //var controllerFactory = new NinjectControllerFactory(kernel);
+            //var myjectContainer = new MyjectContainer();
+            //var controllerFactory = new MyjectControllerFactory(myjectContainer);
 
             if (args.Any(arg => arg.ToLower() == "/nosplash"))
             {
@@ -38,33 +39,6 @@ namespace NullQuest
                     });
             }
         }
-
-        //private static IKernel GetNinjectKernel()
-        //{
-        //    var kernel = new StandardKernel();
-
-        //    kernel.Bind<ICombatEngine>().To<CombatEngine>().InTransientScope();
-            
-        //    kernel.Bind<IDice>().To<Dice>();
-        //    kernel.Bind<IStatsGenerator>().To<StatsGenerator>();
-        //    kernel.Bind<IActionSelector>().To<MonsterActionSelector>();
-        //    kernel.Bind<ICombatantSelector>().To<CombatantSelector>();
-
-        //    kernel.Bind<IMonsterDataRepository>().To<HardCodedMonsterDataRepository>();
-        //    kernel.Bind<IWeaponDataRepository>().To<HardCodedWeaponDataRepository>();
-        //    kernel.Bind<ISpellDataRepository>().To<HardCodedSpellDataRepository>();
-        //    kernel.Bind<IItemDataRepository>().To<HardCodedItemDataRepository>();
-            
-        //    kernel.Bind<IMonsterFactory>().To<MonsterFactory>();
-        //    kernel.Bind<IWeaponFactory>().To<WeaponFactory>();
-        //    kernel.Bind<ISpellFactory>().To<SpellFactory>();
-        //    kernel.Bind<IEffectFactory>().To<EffectFactory>();
-        //    kernel.Bind<IItemFactory>().To<ItemFactory>();
-
-        //    kernel.Bind<IAsciiArtRepository>().To<HardCodedAsciiArtRepository>();
-            
-        //    return kernel;
-        //}
 
         private static void ConfigureConsole()
         {

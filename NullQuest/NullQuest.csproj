@@ -88,6 +88,9 @@
     <Compile Include="Data\IMonsterDataRepository.cs" />
     <Compile Include="Data\ISpellDataRepository.cs" />
     <Compile Include="Data\IWeaponDataRepository.cs" />
+    <Compile Include="DependencyInjection\MyjectContainer.cs" />
+    <Compile Include="DependencyInjection\IjectContainer.cs" />
+    <Compile Include="DependencyInjection\MyjectControllerFactory.cs" />
     <Compile Include="Game\Combat\Attack.cs" />
     <Compile Include="Game\Combat\CastSpell.cs" />
     <Compile Include="Game\Combat\Combatant.cs" />
