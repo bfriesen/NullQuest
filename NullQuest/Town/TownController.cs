@@ -15,15 +15,15 @@ namespace NullQuest.Town
 {
     public class TownController : Controller
     {
-        private readonly ISaveGameRepository _saveGameRepository;
+        private readonly FileSystemSaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
 
-        public TownController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public TownController()
         {
-            _saveGameRepository = saveGameRepository;
-            _asciiArtRepository = asciiArtRepository;
-            _dice = dice;
+            _saveGameRepository = new FileSystemSaveGameRepository();
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
+            _dice = new Dice();
         }
 
         public override ViewModel Index()

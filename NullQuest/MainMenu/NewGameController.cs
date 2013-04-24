@@ -9,14 +9,12 @@ namespace NullQuest.MainMenu
 {
     public class NewGameController : Controller
     {
-        private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IStatsGenerator _statsGenerator;
         private readonly GameInfo _gameInfo = new GameInfo();
 
-        public NewGameController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IStatsGenerator statsGenerator)
+        public NewGameController(IAsciiArtRepository asciiArtRepository, IStatsGenerator statsGenerator)
         {
-            _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
             _statsGenerator = statsGenerator;
         }
@@ -65,7 +63,8 @@ namespace NullQuest.MainMenu
             var menu = new Menu();
             menu.Prompt = "Select save game slot: ";
 
-            var saveGameSlots = _saveGameRepository.GetSaveGameSlots().ToList();
+            var saveGameRepository = new FileSystemSaveGameRepository();
+            var saveGameSlots = saveGameRepository.GetSaveGameSlots().ToList();
 
             foreach (var saveGameSlot in saveGameSlots.OrderBy(x => x.Id))
             {
@@ -317,6 +316,8 @@ namespace NullQuest.MainMenu
 
             _gameInfo.Stats = _statsGenerator.GenerateStats(_gameInfo.Race, _gameInfo.Class);
 
+            var saveGameRepository = new FileSystemSaveGameRepository();
+
             menu.AddMenuItem(
                 new MenuItem
                 {
@@ -326,7 +327,7 @@ namespace NullQuest.MainMenu
                     OnInputAccepted = () =>
                     {
                         var saveGameData =
-                            _saveGameRepository.CreateGame(
+                            saveGameRepository.CreateGame(
                                 _gameInfo.CharacterName,
                                 _gameInfo.SaveGameSlotPosition,
                                 _gameInfo.Race,

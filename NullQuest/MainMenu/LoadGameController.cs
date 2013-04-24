@@ -9,13 +9,11 @@ namespace NullQuest.MainMenu
 {
     public class LoadGameController : Controller
     {
-        private readonly ISaveGameRepository _saveGameRepository;
-        private readonly IAsciiArtRepository _asciiArtRepository;
+        private readonly HardCodedAsciiArtRepository _asciiArtRepository;
 
-        public LoadGameController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository)
+        public LoadGameController()
         {
-            _saveGameRepository = saveGameRepository;
-            _asciiArtRepository = asciiArtRepository;
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
         }
 
         public override ViewModel Index()
@@ -23,7 +21,8 @@ namespace NullQuest.MainMenu
             var menu = new Menu();
             menu.Prompt = "Select save game slot: ";
 
-            var saveGameSlots = _saveGameRepository.GetSaveGameSlots()
+            var saveGameRepository = new FileSystemSaveGameRepository();
+            var saveGameSlots = saveGameRepository.GetSaveGameSlots()
                 .Where(x => !x.IsEmpty)
                 .Select((x, i) => new { SaveGameData = x, Index = i + 1 }).ToList();
 

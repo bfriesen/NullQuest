@@ -13,15 +13,13 @@ namespace NullQuest.Inn
 {
     public class InnController : Controller
     {
-        private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
 
         private string _title;
 
-        public InnController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public InnController(IAsciiArtRepository asciiArtRepository, IDice dice)
         {
-            _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
             _dice = dice;
             _title = "Welcome to the Tolbooth Tavern. The food ain't great and the beds aren't soft. But it's the only Inn in town.";
@@ -44,6 +42,8 @@ namespace NullQuest.Inn
                     }
                 });
 
+            var saveGameRepository = new FileSystemSaveGameRepository();
+
             menu.AddMenuItem(
                 new MenuItem
                 {
@@ -52,7 +52,7 @@ namespace NullQuest.Inn
                     ActionResult = Actions.Reload,
                     OnInputAccepted = () =>
                     {
-                        _saveGameRepository.SaveGame(SaveGameData.FromGameWorld());
+                        saveGameRepository.SaveGame(SaveGameData.FromGameWorld());
                         _title = "Your game has been saved.";
                     }
                 });

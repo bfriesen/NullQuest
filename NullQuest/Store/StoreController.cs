@@ -13,13 +13,11 @@ namespace NullQuest.Store
 {
     public class StoreController : Controller
     {
-        private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
 
-        public StoreController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public StoreController(IAsciiArtRepository asciiArtRepository, IDice dice)
         {
-            _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
             _dice = dice;
         }
