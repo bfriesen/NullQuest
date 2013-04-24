@@ -48,7 +48,6 @@ namespace NullQuest
             kernel.Bind<IDice>().To<Dice>();
             kernel.Bind<IStatsGenerator>().To<StatsGenerator>();
             kernel.Bind<ISaveGameRepository>().To<FileSystemSaveGameRepository>();
-            kernel.Bind<IFileAccess>().To<FileAccess>();
             kernel.Bind<IActionSelector>().To<MonsterActionSelector>();
             kernel.Bind<ICombatantSelector>().To<CombatantSelector>();
 

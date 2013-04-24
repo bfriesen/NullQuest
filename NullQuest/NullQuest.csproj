@@ -77,7 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\FileAccess.cs" />
     <Compile Include="Data\FileSystemSaveGameRepository.cs" />
     <Compile Include="Data\HardCodedAsciiArtRepository.cs" />
     <Compile Include="Data\HardCodedItemDataRepository.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="Data\HardCodedSpellDataRepository.cs" />
     <Compile Include="Data\HardCodedWeaponDataRepository.cs" />
     <Compile Include="Data\IAsciiArtRepository.cs" />
-    <Compile Include="Data\IFileAccess.cs" />
     <Compile Include="Data\IItemDataRepository.cs" />
     <Compile Include="Data\IMonsterDataRepository.cs" />
     <Compile Include="Data\ISpellDataRepository.cs" />
@@ -207,7 +205,6 @@
     <Compile Include="NinjectControllerFactory.cs" />
     <Compile Include="Data\HardCodedGameDataRepository.cs" />
     <Compile Include="Data\IGameDataRepository.cs" />
-    <Compile Include="Data\ISaveGameRepository.cs" />
     <Compile Include="Data\SaveGameData.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Game\CharacterStats.cs" />

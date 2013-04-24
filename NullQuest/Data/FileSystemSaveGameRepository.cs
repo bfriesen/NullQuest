@@ -11,11 +11,16 @@ using XSerializer;
 
 namespace NullQuest.Data
 {
-    public class FileSystemSaveGameRepository : ISaveGameRepository
+    public class FileSystemSaveGameRepository
     {
         private static readonly XmlSerializer<SaveGameData[]> _serializer;
 
-        private readonly IFileAccess _fileAccess;
+        private static readonly string _path =
+            Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                "NullQuest",
+                "SaveGameData.xml");
+
         private readonly SaveGameData[] _savedGames;
 
         static FileSystemSaveGameRepository()
@@ -28,11 +33,9 @@ namespace NullQuest.Data
                             || typeof(IEffect).IsAssignableFrom(t))).ToArray());
         }
 
-        public FileSystemSaveGameRepository(IFileAccess fileAccess)
+        public FileSystemSaveGameRepository()
         {
-            _fileAccess = fileAccess;
-
-            if (!_fileAccess.DoesFileExist)
+            if (!File.Exists(_path))
             {
                 _savedGames = CreateEmptySaveGameData();
             }
@@ -87,7 +90,7 @@ namespace NullQuest.Data
 
         private SaveGameData[] LoadSaveGameData()
         {
-            using (var reader = _fileAccess.CreateReader())
+            using (var reader = new StreamReader(_path, Encoding.UTF8))
             {
                 return _serializer.Deserialize(reader);
             }
@@ -95,7 +98,7 @@ namespace NullQuest.Data
 
         private void Persist(SaveGameData[] savedGames)
         {
-            using (var writer = _fileAccess.CreateWriter())
+            using (var writer = new StreamWriter(_path, false, Encoding.UTF8))
             {
                 _serializer.Serialize(writer, savedGames);
             }
