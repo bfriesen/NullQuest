@@ -79,30 +79,30 @@ namespace NullQuest.Data
             };
         }
 
-        public static SaveGameData FromGameWorld(GameWorld gameWorld)
+        public static SaveGameData FromGameWorld()
         {
             var saveGameData = new SaveGameData
             {
-                BossesDefeated = new List<string>(gameWorld.BossesDefeated),
-                CharacterName = gameWorld.Player.Name,
-                Class = gameWorld.Player.Class.Name,
-                CurrentDungeonLevel = gameWorld.CurrentDungeonLevel,
-                Id = gameWorld.SaveGameId,
-                Level = gameWorld.Player.Level,
-                Gold = gameWorld.Player.Gold,
-                Experience = gameWorld.Player.Experience,
-                Race = gameWorld.Player.Race.Name,
-                Stats = gameWorld.Player.BaseStats,
-                TotalNumberOfMonstersDefeated = gameWorld.TotalNumberOfMonstersDefeated,
-                Weapon = gameWorld.Player.Weapon,
-                Inventory = gameWorld.Player.Inventory.ToList(),
-                SpellBook = gameWorld.Player.SpellBook.ToList()
+                BossesDefeated = new List<string>(GameWorld.BossesDefeated),
+                CharacterName = GameWorld.Player.Name,
+                Class = GameWorld.Player.Class.Name,
+                CurrentDungeonLevel = GameWorld.CurrentDungeonLevel,
+                Id = GameWorld.SaveGameId,
+                Level = GameWorld.Player.Level,
+                Gold = GameWorld.Player.Gold,
+                Experience = GameWorld.Player.Experience,
+                Race = GameWorld.Player.Race.Name,
+                Stats = GameWorld.Player.BaseStats,
+                TotalNumberOfMonstersDefeated = GameWorld.TotalNumberOfMonstersDefeated,
+                Weapon = GameWorld.Player.Weapon,
+                Inventory = GameWorld.Player.Inventory.ToList(),
+                SpellBook = GameWorld.Player.SpellBook.ToList()
             };
 
             return saveGameData;
         }
 
-        public void LoadToGameWorld(GameWorld gameWorld)
+        public void LoadToGameWorld()
         {
             var player = new Player
             {
@@ -118,36 +118,36 @@ namespace NullQuest.Data
 
             player.CurrentHitPoints = player.MaxHitPoints;
             player.CurrentEnergy = player.MaxEnergy;
-            gameWorld.Player = player;
+            GameWorld.Player = player;
 
-            gameWorld.SaveGameId = Id;
-            gameWorld.CurrentDungeonLevel = CurrentDungeonLevel;
-            gameWorld.TotalNumberOfMonstersDefeated = TotalNumberOfMonstersDefeated;
+            GameWorld.SaveGameId = Id;
+            GameWorld.CurrentDungeonLevel = CurrentDungeonLevel;
+            GameWorld.TotalNumberOfMonstersDefeated = TotalNumberOfMonstersDefeated;
 
-            gameWorld.Player.ClearInventory();
+            GameWorld.Player.ClearInventory();
             if (Inventory != null)
             {
                 foreach (var item in Inventory)
                 {
-                    gameWorld.Player.AddItemToInventory(item);
+                    GameWorld.Player.AddItemToInventory(item);
                 }
             }
 
-            gameWorld.Player.ClearSpellBook();
+            GameWorld.Player.ClearSpellBook();
             if (SpellBook != null)
             {
                 foreach (var spell in SpellBook)
                 {
-                    gameWorld.Player.AddSpellToSpellBook(spell);
+                    GameWorld.Player.AddSpellToSpellBook(spell);
                 }
             }
 
-            gameWorld.BossesDefeated.Clear();
+            GameWorld.BossesDefeated.Clear();
             if (BossesDefeated != null)
             {
                 foreach (var boss in BossesDefeated)
                 {
-                    gameWorld.BossesDefeated.Add(boss);
+                    GameWorld.BossesDefeated.Add(boss);
                 }
             }
         }

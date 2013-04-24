@@ -43,7 +43,6 @@ namespace NullQuest
         {
             var kernel = new StandardKernel();
 
-            kernel.Bind<GameWorld>().ToSelf().InSingletonScope();
             kernel.Bind<ICombatEngine>().To<CombatEngine>().InTransientScope();
             
             kernel.Bind<IDice>().To<Dice>();

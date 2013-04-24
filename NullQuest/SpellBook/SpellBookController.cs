@@ -15,7 +15,6 @@ namespace NullQuest.SpellBook
         private const string DefaultTitle = "Spell Book";
         private const string DefaultInformation = "There are many spells in this world. Some are better left unlearned.";
         private const int PageSize = 3;
-        private readonly GameWorld _gameWorld;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
         private ISpell _currentSpell;
@@ -24,9 +23,8 @@ namespace NullQuest.SpellBook
         private string _title;
         private string _information;
 
-        public SpellBookController(GameWorld gameWorld, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public SpellBookController(IAsciiArtRepository asciiArtRepository, IDice dice)
         {
-            _gameWorld = gameWorld;
             _asciiArtRepository = asciiArtRepository;
             _dice = dice;
             _title = DefaultTitle;
@@ -40,7 +38,7 @@ namespace NullQuest.SpellBook
 
             if (_currentSpell == null)
             {
-                var spellBook = _gameWorld.Player.SpellBook.ToList();
+                var spellBook = GameWorld.Player.SpellBook.ToList();
 
                 foreach (var x in spellBook
                     .Skip(_pageIndex * PageSize)
@@ -103,7 +101,7 @@ namespace NullQuest.SpellBook
             }
             else
             {
-                if (_currentSpell is INonCombatSpell && _currentSpell.CanCast(_gameWorld.Player, new NonCombatContext()))
+                if (_currentSpell is INonCombatSpell && _currentSpell.CanCast(GameWorld.Player, new NonCombatContext()))
                 {
                     var menuItem = new MenuItem
                     {
@@ -112,14 +110,14 @@ namespace NullQuest.SpellBook
                         ActionResult = Actions.Reload,
                         OnInputAccepted = () =>
                         {
-                            var logEntry = ((INonCombatSpell)_currentSpell).Cast(_dice, _gameWorld.Player);
+                            var logEntry = ((INonCombatSpell)_currentSpell).Cast(_dice, GameWorld.Player);
 
                             _title = string.Format("Cast {0}", _currentSpell.GetLeveledName());
                             _information = logEntry != null ? logEntry.Text : null;
 
                             _currentSpell = null;
                             _currentSpellIndex = -1;
-                            if ((_pageIndex * PageSize) > _gameWorld.Player.SpellBook.Count())
+                            if ((_pageIndex * PageSize) > GameWorld.Player.SpellBook.Count())
                             {
                                 _pageIndex--;
                             }
@@ -138,7 +136,7 @@ namespace NullQuest.SpellBook
                         ActionResult = Actions.Reload,
                         OnInputAccepted = () =>
                         {
-                            _gameWorld.Player.MoveSpellToTopOfSpellBook(_currentSpell, _currentSpellIndex);
+                            GameWorld.Player.MoveSpellToTopOfSpellBook(_currentSpell, _currentSpellIndex);
                             _currentSpell = null;
                             _currentSpellIndex = -1;
                         }
@@ -163,7 +161,7 @@ namespace NullQuest.SpellBook
 
             var viewModel = ViewModel.CreateWithMenu<SpellBookViewModel>(menu);
 
-            viewModel.Stats = StatsViewModel.FromPlayer(_gameWorld.Player);
+            viewModel.Stats = StatsViewModel.FromPlayer(GameWorld.Player);
             viewModel.Title = _title;
             viewModel.Information = _information;
             viewModel.AsciiArt = _asciiArtRepository.GetSpellBookArt();

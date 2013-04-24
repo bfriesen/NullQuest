@@ -12,15 +12,13 @@ namespace NullQuest.MainMenu
         private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IStatsGenerator _statsGenerator;
-        private readonly GameWorld _gameWorld;
         private readonly GameInfo _gameInfo = new GameInfo();
 
-        public NewGameController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IStatsGenerator statsGenerator, GameWorld gameWorld)
+        public NewGameController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IStatsGenerator statsGenerator)
         {
             _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
             _statsGenerator = statsGenerator;
-            _gameWorld = gameWorld;
         }
 
         public override ViewModel Index()
@@ -335,7 +333,7 @@ namespace NullQuest.MainMenu
                                 _gameInfo.Class,
                                 _gameInfo.Stats);
 
-                        saveGameData.LoadToGameWorld(_gameWorld);
+                        saveGameData.LoadToGameWorld();
                     }
                 });
 

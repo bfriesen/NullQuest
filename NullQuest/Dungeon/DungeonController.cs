@@ -10,16 +10,14 @@ namespace NullQuest.Game.Dungeon
 {
     public class DungeonController : Controller
     {
-        private readonly GameWorld _gameWorld;
         private readonly IDice _dice;
         private readonly IWeaponFactory _weaponFactory;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private string _encounterDetails;
         private LastAction _lastAction = LastAction.MenuNavigation;
 
-        public DungeonController(GameWorld gameWorld, IDice dice, IWeaponFactory weaponFactory, IAsciiArtRepository asciiArtRepository)
+        public DungeonController(IDice dice, IWeaponFactory weaponFactory, IAsciiArtRepository asciiArtRepository)
         {
-            _gameWorld = gameWorld;
             _dice = dice;
             _weaponFactory = weaponFactory;
             _asciiArtRepository = asciiArtRepository;
@@ -62,10 +60,10 @@ namespace NullQuest.Game.Dungeon
 
             DungeonViewModel viewModel = ViewModel.CreateWithMenu<DungeonViewModel>(menu);
 
-            viewModel.Stats = StatsViewModel.FromPlayer(_gameWorld.Player);
-            viewModel.DungeonName = string.Format("{0} (Level {1})", _gameWorld.GetCurrentDungeonName(), _gameWorld.CurrentDungeonLevel);
+            viewModel.Stats = StatsViewModel.FromPlayer(GameWorld.Player);
+            viewModel.DungeonName = string.Format("{0} (Level {1})", GameWorld.GetCurrentDungeonName(), GameWorld.CurrentDungeonLevel);
             viewModel.Information = _encounterDetails ?? "This is the dungeon - it isn't a very friendly place. Hallways go off in seemingly every direction, with no end in sight. A skeleton sits upright against a wall in the corner. No doubt an adventurer that came before you...";
-            viewModel.AsciiArt = _asciiArtRepository.GetDungeonArt(_gameWorld.CurrentDungeonLevel);
+            viewModel.AsciiArt = _asciiArtRepository.GetDungeonArt(GameWorld.CurrentDungeonLevel);
 
             _encounterDetails = null;
 
@@ -83,15 +81,15 @@ namespace NullQuest.Game.Dungeon
             // 1 in 10 chance of finding a chest.
             if (_dice.Random(1, 10) < 10)
             {
-                var gold = (_gameWorld.CurrentDungeonLevel * _dice.Roll(9, 6)) + _dice.Roll(1, 6);
-                _gameWorld.Player.Gold += gold;
+                var gold = (GameWorld.CurrentDungeonLevel * _dice.Roll(9, 6)) + _dice.Roll(1, 6);
+                GameWorld.Player.Gold += gold;
                 _encounterDetails = string.Format("You find a chest with {0} gold inside!", gold);
                 return Actions.Reload;
             }
 
             // 1 in 100 chance of finding an awesome weapon.
-            var weapon = _weaponFactory.CreateWeapon(_gameWorld.CurrentDungeonLevel.GetBossLevel() + 2, true);
-            _gameWorld.Player.AddItemToInventory(weapon);
+            var weapon = _weaponFactory.CreateWeapon(GameWorld.CurrentDungeonLevel.GetBossLevel() + 2, true);
+            GameWorld.Player.AddItemToInventory(weapon);
             _encounterDetails = string.Format("As you take a step, your foot bumps against something. Upon further inspection, you discover that it is a {0}. Awesome!", weapon.GetLeveledName());
             return Actions.Reload;
         }

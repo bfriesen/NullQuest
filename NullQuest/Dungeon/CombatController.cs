@@ -11,14 +11,12 @@ namespace NullQuest.Game.Dungeon
 {
     class CombatController : Controller
     {
-        private readonly GameWorld _gameWorld;
         private readonly ICombatEngine _combatEngine;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IEnumerator<CombatStep> _combatSteps;
 
-        public CombatController(GameWorld gameWorld, ICombatEngine combatEngine, IAsciiArtRepository asciiArtRepository)
+        public CombatController(ICombatEngine combatEngine, IAsciiArtRepository asciiArtRepository)
         {
-            _gameWorld = gameWorld;
             _combatEngine = combatEngine;
             _combatSteps = _combatEngine.GetSteps().GetEnumerator();
             _asciiArtRepository = asciiArtRepository;
@@ -127,8 +125,8 @@ namespace NullQuest.Game.Dungeon
                 break;
             }
 
-            viewModel.Stats = StatsViewModel.FromPlayer(_gameWorld.Player);
-            viewModel.DungeonName = string.Format("{0} (Level {1})", _gameWorld.GetCurrentDungeonName(), _gameWorld.CurrentDungeonLevel);
+            viewModel.Stats = StatsViewModel.FromPlayer(GameWorld.Player);
+            viewModel.DungeonName = string.Format("{0} (Level {1})", GameWorld.GetCurrentDungeonName(), GameWorld.CurrentDungeonLevel);
             viewModel.Information = GetInformation(_combatEngine.CombatContext.CombatLog);
             viewModel.CombatLog = GetCombatLog(_combatEngine.CombatContext.CombatLog);
             viewModel.AsciiArt = GetAsciiArt();
@@ -162,7 +160,7 @@ namespace NullQuest.Game.Dungeon
         {
             if (_combatSteps.Current == CombatStep.PlayerDead)
             {
-                return _asciiArtRepository.GetPlayerDeadArt(_gameWorld.CurrentDungeonLevel);
+                return _asciiArtRepository.GetPlayerDeadArt(GameWorld.CurrentDungeonLevel);
             }
 
             return null;

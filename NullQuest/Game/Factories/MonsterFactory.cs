@@ -34,10 +34,10 @@ namespace NullQuest.Game.Factories
             monsterModifiers = monsterDataRepository.GetAllMonsterModifiers().ToList();
         }
 
-        public Monster CreateMonster(GameWorld gameWorld, CombatContext combatContext)
+        public Monster CreateMonster(CombatContext combatContext)
         {
-            bool isBoss = gameWorld.NumberOfMonstersDefeatedInCurrentDungeonLevel >= gameWorld.RequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss;
-            var monster = CreateMonster(gameWorld.CurrentDungeonLevel, isBoss, combatContext);
+            bool isBoss = GameWorld.NumberOfMonstersDefeatedInCurrentDungeonLevel >= GameWorld.RequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss;
+            var monster = CreateMonster(GameWorld.CurrentDungeonLevel, isBoss, combatContext);
             Debug.WriteLine("Created {0} (Level {1}) HP:{6} ATK:{2} DEF:{3}. Player ATK:{4} DEF:{5}", monster.Name, monster.Level, monster.ToHitAttack, monster.ToHitDefense, combatContext.Player.ToHitAttack, combatContext.Player.ToHitDefense, monster.MaxHitPoints);
             if (monster.Weapon != null) Debug.WriteLine("Monster is wielding a {0} ({1})", monster.Weapon.GetLeveledName(), monster.Weapon.Damage);
             return monster;

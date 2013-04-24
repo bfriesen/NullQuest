@@ -15,14 +15,12 @@ namespace NullQuest.Town
 {
     public class TownController : Controller
     {
-        private readonly GameWorld _gameWorld;
         private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
 
-        public TownController(GameWorld gameWorld, ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public TownController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
         {
-            _gameWorld = gameWorld;
             _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
             _dice = dice;
@@ -53,7 +51,7 @@ namespace NullQuest.Town
                     Text = "Enter the Dungeon",
                     Id = '3',
                     ActionResult = Actions.GoTo<DungeonController>,
-                    OnInputAccepted = () => _gameWorld.SetRequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss(_dice)
+                    OnInputAccepted = () => GameWorld.SetRequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss(_dice)
                 });
 
             menu.AddMenuItem(
@@ -82,7 +80,7 @@ namespace NullQuest.Town
 
             var viewModel = ViewModel.CreateWithMenu<TownViewModel>(menu);
 
-            viewModel.Stats = StatsViewModel.FromPlayer(_gameWorld.Player);
+            viewModel.Stats = StatsViewModel.FromPlayer(GameWorld.Player);
             viewModel.AsciiArt = _asciiArtRepository.GetTownArt();
 
             return viewModel;

@@ -12,7 +12,6 @@ namespace NullQuest.Game.Inventory
         private const string DefaultTitle = "Inventory";
         private const string DefaultInformation = "Your bag can hold many things, but be mindful: a heavy bag may slow you down.";
         private const int PageSize = 5;
-        private readonly GameWorld _gameWorld;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
         private IItem _currentItem;
@@ -21,9 +20,8 @@ namespace NullQuest.Game.Inventory
         private string _title;
         private string _information;
 
-        public InventoryController(GameWorld gameWorld, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public InventoryController(IAsciiArtRepository asciiArtRepository, IDice dice)
         {
-            _gameWorld = gameWorld;
             _asciiArtRepository = asciiArtRepository;
             _dice = dice;
             _title = DefaultTitle;
@@ -37,7 +35,7 @@ namespace NullQuest.Game.Inventory
 
             if (_currentItem == null)
             {
-                var inventory = _gameWorld.Player.Inventory.Where(item => item.Quantity > 0).ToList();
+                var inventory = GameWorld.Player.Inventory.Where(item => item.Quantity > 0).ToList();
 
                 foreach (var x in inventory
                     .Skip(_pageIndex * PageSize)
@@ -100,7 +98,7 @@ namespace NullQuest.Game.Inventory
             }
             else
             {
-                if (_currentItem is INonCombatItem && _currentItem.CanUse(_gameWorld.Player, new NonCombatContext()))
+                if (_currentItem is INonCombatItem && _currentItem.CanUse(GameWorld.Player, new NonCombatContext()))
                 {
                     var menuItem = new MenuItem
                     {
@@ -109,14 +107,14 @@ namespace NullQuest.Game.Inventory
                         ActionResult = Actions.Reload,
                         OnInputAccepted = () =>
                         {
-                            var logEntry = ((INonCombatItem)_currentItem).Use(_dice, _gameWorld.Player);
+                            var logEntry = ((INonCombatItem)_currentItem).Use(_dice, GameWorld.Player);
                          
                             _title = (_currentItem is Weapon ? "Equipped " : "Used 1 ") + _currentItem.GetLeveledName();
                             _information = logEntry != null ? logEntry.Text : null;
 
                             _currentItem = null;
                             _currentItemIndex = -1;
-                            if ((_pageIndex * PageSize) > _gameWorld.Player.Inventory.Count(item => item.Quantity > 0))
+                            if ((_pageIndex * PageSize) > GameWorld.Player.Inventory.Count(item => item.Quantity > 0))
                             {
                                 _pageIndex--;
                             }
@@ -140,10 +138,10 @@ namespace NullQuest.Game.Inventory
                                 _title = DefaultTitle;
                                 _information = "Discarded 1 " + _currentItem.Name;
 
-                                _gameWorld.Player.RemoveItemFromInventory(_currentItem);
+                                GameWorld.Player.RemoveItemFromInventory(_currentItem);
                                 _currentItem = null;
                                 _currentItemIndex = -1;
-                                if ((_pageIndex * PageSize) > _gameWorld.Player.Inventory.Count(item => item.Quantity > 0))
+                                if ((_pageIndex * PageSize) > GameWorld.Player.Inventory.Count(item => item.Quantity > 0))
                                 {
                                     _pageIndex--;
                                 }
@@ -160,7 +158,7 @@ namespace NullQuest.Game.Inventory
                         ActionResult = Actions.Reload,
                         OnInputAccepted = () =>
                         {
-                            _gameWorld.Player.MoveItemToTopOfInventory(_currentItem, _currentItemIndex);
+                            GameWorld.Player.MoveItemToTopOfInventory(_currentItem, _currentItemIndex);
                             _currentItem = null;
                             _currentItemIndex = -1;
                         }
@@ -186,7 +184,7 @@ namespace NullQuest.Game.Inventory
 
             var viewModel = ViewModel.CreateWithMenu<InventoryViewModel>(menu);
 
-            viewModel.Stats = StatsViewModel.FromPlayer(_gameWorld.Player);
+            viewModel.Stats = StatsViewModel.FromPlayer(GameWorld.Player);
             viewModel.Title = _title;
             viewModel.Information = _information;
             viewModel.AsciiArt = _asciiArtRepository.GetInventoryArt();

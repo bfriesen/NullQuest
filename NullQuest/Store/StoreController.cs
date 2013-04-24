@@ -13,14 +13,12 @@ namespace NullQuest.Store
 {
     public class StoreController : Controller
     {
-        private readonly GameWorld _gameWorld;
         private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
 
-        public StoreController(GameWorld gameWorld, ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public StoreController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
         {
-            _gameWorld = gameWorld;
             _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
             _dice = dice;
@@ -41,7 +39,7 @@ namespace NullQuest.Store
             var viewModel = ViewModel.CreateWithMenu<StoreViewModel>(menu);
 
             viewModel.Title = "We're closed. Go away.";
-            viewModel.Stats = StatsViewModel.FromPlayer(_gameWorld.Player);
+            viewModel.Stats = StatsViewModel.FromPlayer(GameWorld.Player);
             viewModel.AsciiArt = _asciiArtRepository.GetStoreArt();
 
             return viewModel;

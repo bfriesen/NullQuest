@@ -6,31 +6,31 @@ using NullQuest.Data;
 
 namespace NullQuest.Game
 {
-    public class GameWorld
+    public static class GameWorld
     {
-        private readonly IDungeonNameGenerator dungeonNameGenerator;
+        private static readonly IDungeonNameGenerator dungeonNameGenerator;
 
-        public GameWorld(IDungeonNameGenerator dungeonNameGenerator)
+        static GameWorld()
         {
-            this.dungeonNameGenerator = dungeonNameGenerator;
+            dungeonNameGenerator = new DeterministicDungeonNameGenerator();
             BossesDefeated = new List<string>();
         }
 
-        public int SaveGameId { get; set; }
-        public Player Player { get; set; }
-        public int CurrentDungeonLevel { get; set; }
-        public int NumberOfMonstersDefeatedInCurrentDungeonLevel { get; set; }
-        public int RequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss { get; set; }
-        public int TotalNumberOfMonstersDefeated { get; set; }
-        public IList<string> BossesDefeated { get; private set; }
+        public static int SaveGameId { get; set; }
+        public static Player Player { get; set; }
+        public static int CurrentDungeonLevel { get; set; }
+        public static int NumberOfMonstersDefeatedInCurrentDungeonLevel { get; set; }
+        public static int RequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss { get; set; }
+        public static int TotalNumberOfMonstersDefeated { get; set; }
+        public static IList<string> BossesDefeated { get; private set; }
 
-        public void SetRequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss(IDice dice)
+        public static void SetRequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss(IDice dice)
         {
             NumberOfMonstersDefeatedInCurrentDungeonLevel = 0;
             RequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss = Player.Level + dice.Roll(1, 6);
         }
 
-        public string GetCurrentDungeonName()
+        public static string GetCurrentDungeonName()
         {
             return dungeonNameGenerator.GenerateName(CurrentDungeonLevel);
         }

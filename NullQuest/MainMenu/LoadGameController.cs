@@ -11,13 +11,11 @@ namespace NullQuest.MainMenu
     {
         private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
-        private readonly GameWorld _gameWorld;
 
-        public LoadGameController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, GameWorld gameWorld)
+        public LoadGameController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository)
         {
             _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
-            _gameWorld = gameWorld;
         }
 
         public override ViewModel Index()
@@ -39,7 +37,7 @@ namespace NullQuest.MainMenu
                         Id = item.Index.ToString()[0],
                         OnInputAccepted = () =>
                         {
-                            item.SaveGameData.LoadToGameWorld(_gameWorld);
+                            item.SaveGameData.LoadToGameWorld();
                         }
                     });
             }

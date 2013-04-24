@@ -10,20 +10,18 @@ namespace NullQuest.Game.Combat
 {
     public class CombatEngine : ICombatEngine
     {
-        private readonly GameWorld _gameWorld;
         private readonly CombatContext _combatContext;
         private readonly ICombatantSelector _combantSelector;
         private readonly IDice _dice;
         private bool _hasPlayerActionBeenApplied;
 
-        public CombatEngine(GameWorld gameWorld, IMonsterFactory monsterFactory, ICombatantSelector combantSelector, IDice dice)
+        public CombatEngine(IMonsterFactory monsterFactory, ICombatantSelector combantSelector, IDice dice)
         {
-            _gameWorld = gameWorld;
             _combantSelector = combantSelector;
             _dice = dice;
             _combatContext = new CombatContext();
-            _combatContext.Player = _gameWorld.Player;
-            _combatContext.Monster = monsterFactory.CreateMonster(_gameWorld, _combatContext);
+            _combatContext.Player = GameWorld.Player;
+            _combatContext.Monster = monsterFactory.CreateMonster(_combatContext);
             _combatContext.Player.HasFledCombat = false;
             _combatContext.Monster.HasFledCombat = false;
         }
@@ -132,16 +130,16 @@ namespace NullQuest.Game.Combat
                     ).ToList().ForEach(x => CombatContext.CombatLog.Add(x));
                 CombatContext.Monster.Inventory.ToList().ForEach(i => CombatContext.Player.AddItemToInventory(i));
 
-                _gameWorld.TotalNumberOfMonstersDefeated++;
+                GameWorld.TotalNumberOfMonstersDefeated++;
 
                 if (CombatContext.Monster.IsBoss)
                 {
-                    _gameWorld.CurrentDungeonLevel++;
-                    _gameWorld.SetRequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss(_dice);
+                    GameWorld.CurrentDungeonLevel++;
+                    GameWorld.SetRequiredNumberOfMonstersInCurrentDungeonLevelBeforeBoss(_dice);
                 }
                 else
                 {
-                    _gameWorld.NumberOfMonstersDefeatedInCurrentDungeonLevel++;
+                    GameWorld.NumberOfMonstersDefeatedInCurrentDungeonLevel++;
                 }
 
                 CombatContext.Player.AddExperience(CombatContext.Monster.Experience);

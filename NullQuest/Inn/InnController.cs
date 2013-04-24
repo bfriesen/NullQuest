@@ -13,16 +13,14 @@ namespace NullQuest.Inn
 {
     public class InnController : Controller
     {
-        private readonly GameWorld _gameWorld;
         private readonly ISaveGameRepository _saveGameRepository;
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
 
         private string _title;
 
-        public InnController(GameWorld gameWorld, ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
+        public InnController(ISaveGameRepository saveGameRepository, IAsciiArtRepository asciiArtRepository, IDice dice)
         {
-            _gameWorld = gameWorld;
             _saveGameRepository = saveGameRepository;
             _asciiArtRepository = asciiArtRepository;
             _dice = dice;
@@ -41,7 +39,7 @@ namespace NullQuest.Inn
                     ActionResult = Actions.Reload,
                     OnInputAccepted = () => 
                     {
-                        _gameWorld.Player.Rest();
+                        GameWorld.Player.Rest();
                         _title = "Your health and energy has been restored.";
                     }
                 });
@@ -54,7 +52,7 @@ namespace NullQuest.Inn
                     ActionResult = Actions.Reload,
                     OnInputAccepted = () =>
                     {
-                        _saveGameRepository.SaveGame(SaveGameData.FromGameWorld(_gameWorld));
+                        _saveGameRepository.SaveGame(SaveGameData.FromGameWorld());
                         _title = "Your game has been saved.";
                     }
                 });
@@ -70,7 +68,7 @@ namespace NullQuest.Inn
             var viewModel = ViewModel.CreateWithMenu<InnViewModel>(menu);
 
             viewModel.Title = _title;
-            viewModel.Stats = StatsViewModel.FromPlayer(_gameWorld.Player);
+            viewModel.Stats = StatsViewModel.FromPlayer(GameWorld.Player);
             viewModel.AsciiArt = _asciiArtRepository.GetInnArt();
 
             return viewModel;
