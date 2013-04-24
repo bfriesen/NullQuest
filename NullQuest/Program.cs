@@ -51,7 +51,6 @@ namespace NullQuest
             kernel.Bind<IFileAccess>().To<FileAccess>();
             kernel.Bind<IActionSelector>().To<MonsterActionSelector>();
             kernel.Bind<ICombatantSelector>().To<CombatantSelector>();
-            kernel.Bind<IDungeonNameGenerator>().To<DeterministicDungeonNameGenerator>();
 
             kernel.Bind<IMonsterDataRepository>().To<HardCodedMonsterDataRepository>();
             kernel.Bind<IWeaponDataRepository>().To<HardCodedWeaponDataRepository>();

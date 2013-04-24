@@ -77,7 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DeterministicDungeonNameGenerator.cs" />
     <Compile Include="Data\FileAccess.cs" />
     <Compile Include="Data\FileSystemSaveGameRepository.cs" />
     <Compile Include="Data\HardCodedAsciiArtRepository.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Data\HardCodedSpellDataRepository.cs" />
     <Compile Include="Data\HardCodedWeaponDataRepository.cs" />
     <Compile Include="Data\IAsciiArtRepository.cs" />
-    <Compile Include="Data\IDungeonNameGenerator.cs" />
     <Compile Include="Data\IFileAccess.cs" />
     <Compile Include="Data\IItemDataRepository.cs" />
     <Compile Include="Data\IMonsterDataRepository.cs" />
