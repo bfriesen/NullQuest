@@ -42,28 +42,31 @@ namespace NullQuest
         private static IKernel GetNinjectKernel()
         {
             var kernel = new StandardKernel();
-            kernel.Bind<IDice>().To<Dice>().InSingletonScope();
-            kernel.Bind<IStatsGenerator>().To<StatsGenerator>().InSingletonScope();
-            kernel.Bind<ISaveGameRepository>().To<FileSystemSaveGameRepository>().InSingletonScope();
-            kernel.Bind<IFileAccess>().To<FileAccess>();
+
             kernel.Bind<GameWorld>().ToSelf().InSingletonScope();
-            kernel.Bind<IActionSelector>().To<MonsterActionSelector>().InSingletonScope();
-            kernel.Bind<ICombatantSelector>().To<CombatantSelector>().InSingletonScope();
             kernel.Bind<ICombatEngine>().To<CombatEngine>().InTransientScope();
-            kernel.Bind<IDungeonNameGenerator>().To<DeterministicDungeonNameGenerator>().InSingletonScope();
-
-            kernel.Bind<IMonsterDataRepository>().To<HardCodedMonsterDataRepository>().InSingletonScope();
-            kernel.Bind<IWeaponDataRepository>().To<HardCodedWeaponDataRepository>().InSingletonScope();
-            kernel.Bind<ISpellDataRepository>().To<HardCodedSpellDataRepository>().InSingletonScope();
-            kernel.Bind<IItemDataRepository>().To<HardCodedItemDataRepository>().InSingletonScope();
             
-            kernel.Bind<IMonsterFactory>().To<MonsterFactory>().InSingletonScope();
-            kernel.Bind<IWeaponFactory>().To<WeaponFactory>().InSingletonScope();
-            kernel.Bind<ISpellFactory>().To<SpellFactory>().InSingletonScope();
-            kernel.Bind<IEffectFactory>().To<EffectFactory>().InSingletonScope();
-            kernel.Bind<IItemFactory>().To<ItemFactory>().InSingletonScope();
+            kernel.Bind<IDice>().To<Dice>();
+            kernel.Bind<IStatsGenerator>().To<StatsGenerator>();
+            kernel.Bind<ISaveGameRepository>().To<FileSystemSaveGameRepository>();
+            kernel.Bind<IFileAccess>().To<FileAccess>();
+            kernel.Bind<IActionSelector>().To<MonsterActionSelector>();
+            kernel.Bind<ICombatantSelector>().To<CombatantSelector>();
+            kernel.Bind<IDungeonNameGenerator>().To<DeterministicDungeonNameGenerator>();
 
-            kernel.Bind<IAsciiArtRepository>().To<HardCodedAsciiArtRepository>().InSingletonScope();
+            kernel.Bind<IMonsterDataRepository>().To<HardCodedMonsterDataRepository>();
+            kernel.Bind<IWeaponDataRepository>().To<HardCodedWeaponDataRepository>();
+            kernel.Bind<ISpellDataRepository>().To<HardCodedSpellDataRepository>();
+            kernel.Bind<IItemDataRepository>().To<HardCodedItemDataRepository>();
+            
+            kernel.Bind<IMonsterFactory>().To<MonsterFactory>();
+            kernel.Bind<IWeaponFactory>().To<WeaponFactory>();
+            kernel.Bind<ISpellFactory>().To<SpellFactory>();
+            kernel.Bind<IEffectFactory>().To<EffectFactory>();
+            kernel.Bind<IItemFactory>().To<ItemFactory>();
+
+            kernel.Bind<IAsciiArtRepository>().To<HardCodedAsciiArtRepository>();
+            
             return kernel;
         }
 
