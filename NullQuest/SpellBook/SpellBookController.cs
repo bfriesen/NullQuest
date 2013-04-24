@@ -12,21 +12,32 @@ namespace NullQuest.SpellBook
 {
     public class SpellBookController : Controller
     {
+        #region Here There Be Dragons
         private const string DefaultTitle = "Spell Book";
         private const string DefaultInformation = "There are many spells in this world. Some are better left unlearned.";
         private const int PageSize = 3;
-        private readonly IAsciiArtRepository _asciiArtRepository;
-        private readonly IDice _dice;
+
         private ISpell _currentSpell;
         private int _currentSpellIndex = -1;
         private int _pageIndex;
         private string _title;
         private string _information;
+        #endregion
 
-        public SpellBookController(IAsciiArtRepository asciiArtRepository, IDice dice)
+        private readonly IAsciiArtRepository _asciiArtRepository;
+        private readonly IDice _dice;
+        
+        public SpellBookController()
         {
-            _asciiArtRepository = asciiArtRepository;
-            _dice = dice;
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
+            _dice = new Dice();
+
+            Init();
+        }
+
+        #region Here There Be Dragons
+        private void Init()
+        {
             _title = DefaultTitle;
             _information = DefaultInformation;
         }
@@ -168,5 +179,6 @@ namespace NullQuest.SpellBook
             
             return viewModel;
         }
+        #endregion
     }
 }

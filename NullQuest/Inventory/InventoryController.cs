@@ -9,25 +9,36 @@ namespace NullQuest.Game.Inventory
 {
     public class InventoryController : Controller
     {
+        #region Here There Be Dragons
         private const string DefaultTitle = "Inventory";
         private const string DefaultInformation = "Your bag can hold many things, but be mindful: a heavy bag may slow you down.";
         private const int PageSize = 5;
-        private readonly IAsciiArtRepository _asciiArtRepository;
-        private readonly IDice _dice;
+
         private IItem _currentItem;
         private int _currentItemIndex = -1;
         private int _pageIndex;
         private string _title;
         private string _information;
+        #endregion
 
-        public InventoryController(IAsciiArtRepository asciiArtRepository, IDice dice)
+        private readonly IAsciiArtRepository _asciiArtRepository;
+        private readonly IDice _dice;
+        
+        public InventoryController()
         {
-            _asciiArtRepository = asciiArtRepository;
-            _dice = dice;
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
+            _dice = new Dice();
+
+            Init();
+        }
+
+        #region Here There Be Dragons
+        private void Init()
+        {
             _title = DefaultTitle;
             _information = DefaultInformation;
         }
-
+        
         public override ViewModel Index()
         {
             var menu = new Menu();
@@ -179,7 +190,6 @@ namespace NullQuest.Game.Inventory
                             _currentItemIndex = -1;
                         }
                     });
-
             }
 
             var viewModel = ViewModel.CreateWithMenu<InventoryViewModel>(menu);
@@ -191,5 +201,6 @@ namespace NullQuest.Game.Inventory
             
             return viewModel;
         }
+        #endregion
     }
 }
