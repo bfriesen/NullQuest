@@ -61,9 +61,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\BadSnowstorm.0.0.1\lib\net40\BadSnowstorm.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.2.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\packages\Castle.Windsor.3.2.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net40\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -205,7 +213,6 @@
     </Compile>
     <Compile Include="Inventory\InventoryView.cs" />
     <Compile Include="Inventory\InventoryViewModel.cs" />
-    <Compile Include="NinjectControllerFactory.cs" />
     <Compile Include="Data\HardCodedGameDataRepository.cs" />
     <Compile Include="Data\IGameDataRepository.cs" />
     <Compile Include="Data\SaveGameData.cs" />

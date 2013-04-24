@@ -6,7 +6,6 @@ using NullQuest.Game.Effects;
 using NullQuest.Game.Factories;
 using NullQuest.MainMenu;
 using BadSnowstorm;
-using Ninject;
 using NullQuest.Data;
 using NullQuest.Game.Combat;
 using NullQuest.DependencyInjection;
