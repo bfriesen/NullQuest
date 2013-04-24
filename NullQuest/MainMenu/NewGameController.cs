@@ -13,10 +13,10 @@ namespace NullQuest.MainMenu
         private readonly IStatsGenerator _statsGenerator;
         private readonly GameInfo _gameInfo = new GameInfo();
 
-        public NewGameController(IAsciiArtRepository asciiArtRepository, IStatsGenerator statsGenerator)
+        public NewGameController()
         {
-            _asciiArtRepository = asciiArtRepository;
-            _statsGenerator = statsGenerator;
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
+            _statsGenerator = new StatsGenerator(new Dice());
         }
 
         public override ViewModel Index()

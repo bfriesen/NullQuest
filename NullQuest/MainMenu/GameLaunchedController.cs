@@ -7,9 +7,9 @@ namespace NullQuest.MainMenu
     {
         private readonly IAsciiArtRepository _asciiArtRepository;
 
-        public GameLaunchedController(IAsciiArtRepository asciiArtRepository)
+        public GameLaunchedController()
         {
-            _asciiArtRepository = asciiArtRepository;
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
         }
 
         public override ViewModel Index()

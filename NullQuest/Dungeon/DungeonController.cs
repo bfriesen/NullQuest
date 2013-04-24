@@ -16,11 +16,11 @@ namespace NullQuest.Game.Dungeon
         private string _encounterDetails;
         private LastAction _lastAction = LastAction.MenuNavigation;
 
-        public DungeonController(IDice dice, IWeaponFactory weaponFactory, IAsciiArtRepository asciiArtRepository)
+        public DungeonController()
         {
-            _dice = dice;
-            _weaponFactory = weaponFactory;
-            _asciiArtRepository = asciiArtRepository;
+            _dice = new Dice();
+            _weaponFactory = new WeaponFactory(new HardCodedWeaponDataRepository(), new Dice());
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
         }
 
         public override ViewModel Index()

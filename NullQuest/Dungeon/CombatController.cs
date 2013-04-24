@@ -6,6 +6,8 @@ using NullQuest.Game.Combat;
 using NullQuest.MainMenu;
 using BadSnowstorm;
 using NullQuest.Data;
+using NullQuest.Game.Factories;
+using NullQuest.Game.Effects;
 
 namespace NullQuest.Game.Dungeon
 {
@@ -15,11 +17,34 @@ namespace NullQuest.Game.Dungeon
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IEnumerator<CombatStep> _combatSteps;
 
-        public CombatController(ICombatEngine combatEngine, IAsciiArtRepository asciiArtRepository)
+        public CombatController()
         {
-            _combatEngine = combatEngine;
+            _combatEngine =
+                new CombatEngine(
+                    new MonsterFactory(
+                        new WeaponFactory(
+                            new HardCodedWeaponDataRepository(),
+                            new Dice()),
+                        new SpellFactory(
+                            new HardCodedSpellDataRepository(
+                                new EffectFactory()),
+                                new Dice()),
+                        new ItemFactory(
+                            new HardCodedItemDataRepository(
+                                new EffectFactory()),
+                                new Dice()),
+                        new HardCodedMonsterDataRepository(),
+                        new MonsterActionSelector(
+                            new Dice()),
+                        new StatsGenerator(
+                            new Dice()),
+                        new Dice()),
+                    new CombatantSelector(),
+                    new Dice());
+
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
+
             _combatSteps = _combatEngine.GetSteps().GetEnumerator();
-            _asciiArtRepository = asciiArtRepository;
         }
 
         public override ViewModel Index()

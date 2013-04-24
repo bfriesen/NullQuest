@@ -11,13 +11,13 @@ namespace NullQuest.Game.Combat
     public class CombatEngine : ICombatEngine
     {
         private readonly CombatContext _combatContext;
-        private readonly ICombatantSelector _combantSelector;
+        private readonly ICombatantSelector _combatantSelector;
         private readonly IDice _dice;
         private bool _hasPlayerActionBeenApplied;
 
-        public CombatEngine(IMonsterFactory monsterFactory, ICombatantSelector combantSelector, IDice dice)
+        public CombatEngine(IMonsterFactory monsterFactory, ICombatantSelector combatantSelector, IDice dice)
         {
-            _combantSelector = combantSelector;
+            _combatantSelector = combatantSelector;
             _dice = dice;
             _combatContext = new CombatContext();
             _combatContext.Player = GameWorld.Player;
@@ -41,7 +41,7 @@ namespace NullQuest.Game.Combat
 
                 Combatant currentAttacter;
 
-                while ((currentAttacter = _combantSelector.GetNextCombatant(CombatContext)) is Monster)
+                while ((currentAttacter = _combatantSelector.GetNextCombatant(CombatContext)) is Monster)
                 {
                     yield return CombatStep.MonsterActionStart;
 

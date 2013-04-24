@@ -18,10 +18,10 @@ namespace NullQuest.Inn
 
         private string _title;
 
-        public InnController(IAsciiArtRepository asciiArtRepository, IDice dice)
+        public InnController()
         {
-            _asciiArtRepository = asciiArtRepository;
-            _dice = dice;
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
+            _dice = new Dice();
             _title = "Welcome to the Tolbooth Tavern. The food ain't great and the beds aren't soft. But it's the only Inn in town.";
         }
 

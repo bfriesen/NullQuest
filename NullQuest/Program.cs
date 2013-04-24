@@ -18,15 +18,15 @@ namespace NullQuest
         {
             ConfigureConsole();
 
-            var kernel = GetNinjectKernel();
-            var controllerFactory = new NinjectControllerFactory(kernel);
+            //var kernel = GetNinjectKernel();
+            //var controllerFactory = new NinjectControllerFactory(kernel);
 
             if (args.Any(arg => arg.ToLower() == "/nosplash"))
             {
                 Application.Run(
                     new ApplicationContext<GameLaunchedController>
                     {
-                        ControllerFactory = controllerFactory
+                        //ControllerFactory = controllerFactory
                     });
             }
             else
@@ -34,37 +34,37 @@ namespace NullQuest
                 Application.Run(
                     new ApplicationContext<SplashScreen, GameLaunchedController>
                     {
-                        ControllerFactory = controllerFactory
+                        //ControllerFactory = controllerFactory
                     });
             }
         }
 
-        private static IKernel GetNinjectKernel()
-        {
-            var kernel = new StandardKernel();
+        //private static IKernel GetNinjectKernel()
+        //{
+        //    var kernel = new StandardKernel();
 
-            kernel.Bind<ICombatEngine>().To<CombatEngine>().InTransientScope();
+        //    kernel.Bind<ICombatEngine>().To<CombatEngine>().InTransientScope();
             
-            kernel.Bind<IDice>().To<Dice>();
-            kernel.Bind<IStatsGenerator>().To<StatsGenerator>();
-            kernel.Bind<IActionSelector>().To<MonsterActionSelector>();
-            kernel.Bind<ICombatantSelector>().To<CombatantSelector>();
+        //    kernel.Bind<IDice>().To<Dice>();
+        //    kernel.Bind<IStatsGenerator>().To<StatsGenerator>();
+        //    kernel.Bind<IActionSelector>().To<MonsterActionSelector>();
+        //    kernel.Bind<ICombatantSelector>().To<CombatantSelector>();
 
-            kernel.Bind<IMonsterDataRepository>().To<HardCodedMonsterDataRepository>();
-            kernel.Bind<IWeaponDataRepository>().To<HardCodedWeaponDataRepository>();
-            kernel.Bind<ISpellDataRepository>().To<HardCodedSpellDataRepository>();
-            kernel.Bind<IItemDataRepository>().To<HardCodedItemDataRepository>();
+        //    kernel.Bind<IMonsterDataRepository>().To<HardCodedMonsterDataRepository>();
+        //    kernel.Bind<IWeaponDataRepository>().To<HardCodedWeaponDataRepository>();
+        //    kernel.Bind<ISpellDataRepository>().To<HardCodedSpellDataRepository>();
+        //    kernel.Bind<IItemDataRepository>().To<HardCodedItemDataRepository>();
             
-            kernel.Bind<IMonsterFactory>().To<MonsterFactory>();
-            kernel.Bind<IWeaponFactory>().To<WeaponFactory>();
-            kernel.Bind<ISpellFactory>().To<SpellFactory>();
-            kernel.Bind<IEffectFactory>().To<EffectFactory>();
-            kernel.Bind<IItemFactory>().To<ItemFactory>();
+        //    kernel.Bind<IMonsterFactory>().To<MonsterFactory>();
+        //    kernel.Bind<IWeaponFactory>().To<WeaponFactory>();
+        //    kernel.Bind<ISpellFactory>().To<SpellFactory>();
+        //    kernel.Bind<IEffectFactory>().To<EffectFactory>();
+        //    kernel.Bind<IItemFactory>().To<ItemFactory>();
 
-            kernel.Bind<IAsciiArtRepository>().To<HardCodedAsciiArtRepository>();
+        //    kernel.Bind<IAsciiArtRepository>().To<HardCodedAsciiArtRepository>();
             
-            return kernel;
-        }
+        //    return kernel;
+        //}
 
         private static void ConfigureConsole()
         {

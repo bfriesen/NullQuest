@@ -16,10 +16,10 @@ namespace NullQuest.Store
         private readonly IAsciiArtRepository _asciiArtRepository;
         private readonly IDice _dice;
 
-        public StoreController(IAsciiArtRepository asciiArtRepository, IDice dice)
+        public StoreController()
         {
-            _asciiArtRepository = asciiArtRepository;
-            _dice = dice;
+            _asciiArtRepository = new HardCodedAsciiArtRepository();
+            _dice = new Dice();
         }
 
         public override ViewModel Index()
