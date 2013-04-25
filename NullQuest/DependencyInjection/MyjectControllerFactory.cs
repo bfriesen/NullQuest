@@ -8,9 +8,9 @@ namespace NullQuest.DependencyInjection
 {
     public class MyjectControllerFactory : IControllerFactory
     {
-        private readonly MyjectContainer _container;
+        private readonly IjectContainer _container;
 
-        public MyjectControllerFactory(MyjectContainer container)
+        public MyjectControllerFactory(IjectContainer container)
         {
             _container = container;
         }
