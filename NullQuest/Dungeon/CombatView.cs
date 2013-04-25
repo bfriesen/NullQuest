@@ -7,7 +7,7 @@ using BadSnowstorm;
 
 namespace NullQuest.Game.Dungeon
 {
-    class CombatView : View<CombatView, CombatViewModel>
+    public class CombatView : View<CombatView, CombatViewModel>
     {
         private readonly ContentArea mainArea;
         private readonly ContentArea dungeonNameArea;

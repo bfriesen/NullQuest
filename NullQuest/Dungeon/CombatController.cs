@@ -11,7 +11,7 @@ using NullQuest.Game.Effects;
 
 namespace NullQuest.Game.Dungeon
 {
-    class CombatController : Controller
+    public class CombatController : Controller
     {
         private readonly ICombatEngine _combatEngine;
         private readonly IAsciiArtRepository _asciiArtRepository;

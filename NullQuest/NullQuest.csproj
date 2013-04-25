@@ -116,9 +116,6 @@
     <Compile Include="Game\Combat\CombatRoundResult.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Game\Combat\DamageCalculator.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Game\Combat\CombatEngine.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -197,9 +194,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Game\Combat\MonsterActionSelector.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Game\Combat\PlayerActionSelector.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dungeon\CombatController.cs">

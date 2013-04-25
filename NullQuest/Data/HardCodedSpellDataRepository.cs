@@ -8,7 +8,7 @@ using NullQuest.Game.Spells;
 
 namespace NullQuest.Data
 {
-    class HardCodedSpellDataRepository : ISpellDataRepository
+    public class HardCodedSpellDataRepository : ISpellDataRepository
     {
         private readonly IEffectFactory effectFactory;
 

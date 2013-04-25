@@ -6,7 +6,7 @@ using NullQuest.Game.Items;
 
 namespace NullQuest.Data
 {
-    class HardCodedItemDataRepository : IItemDataRepository
+    public class HardCodedItemDataRepository : IItemDataRepository
     {
         private readonly IEffectFactory effectFactory;
 

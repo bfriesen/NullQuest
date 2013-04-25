@@ -9,7 +9,7 @@ using NullQuest.Game.Spells;
 
 namespace NullQuest.Data
 {
-    class HardCodedMonsterDataRepository : IMonsterDataRepository
+    public class HardCodedMonsterDataRepository : IMonsterDataRepository
     {
         public IEnumerable<MonsterArchetype> GetAllMonsterArchetypes()
         {
