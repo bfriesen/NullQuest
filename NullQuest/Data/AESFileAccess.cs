@@ -15,7 +15,7 @@ namespace NullQuest.Data
             _fileAccess = fileAccess;
         }
 
-        private Rijndael GetAlgorithm()
+        private SymmetricAlgorithm GetAlgorithm()
         {
             Rijndael algo = Rijndael.Create();
             algo.Padding = PaddingMode.PKCS7;
@@ -31,7 +31,7 @@ namespace NullQuest.Data
 
         public System.IO.StreamReader CreateReader()
         {
-            using (Rijndael algorithm = GetAlgorithm())
+            using (SymmetricAlgorithm algorithm = GetAlgorithm())
             {
                 CryptoStream cs = new CryptoStream(_fileAccess.CreateReader().BaseStream, algorithm.CreateDecryptor(), CryptoStreamMode.Read);
                 return new System.IO.StreamReader(cs);
@@ -40,7 +40,7 @@ namespace NullQuest.Data
 
         public System.IO.StreamWriter CreateWriter()
         {
-            using (Rijndael algorithm = GetAlgorithm()) {
+            using (SymmetricAlgorithm algorithm = GetAlgorithm()) {
                 CryptoStream cs = new CryptoStream(_fileAccess.CreateWriter().BaseStream, algorithm.CreateEncryptor(), CryptoStreamMode.Write);
                 return new System.IO.StreamWriter(cs);
             }
