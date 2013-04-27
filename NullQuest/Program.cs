@@ -18,7 +18,7 @@ namespace NullQuest
         {
             ConfigureConsole();
 
-            var kernel = GetNinjectKernel();
+            var kernel = GetNinjectKernel(DisableEncryption(args));
             var controllerFactory = new NinjectControllerFactory(kernel);
 
             if (args.Any(arg => arg.ToLower() == "/nosplash"))
@@ -39,14 +39,22 @@ namespace NullQuest
             }
         }
 
-        private static IKernel GetNinjectKernel()
+        private static bool DisableEncryption(string[] args)
+        {
+#if DEBUG
+            return args.Any(arg => arg.ToLower() == "/disableencryption");
+#else
+            return false;
+#endif
+        }
+
+        private static IKernel GetNinjectKernel(bool disableEncryption)
         {
             var kernel = new StandardKernel();
             kernel.Bind<IDice>().To<Dice>().InSingletonScope();
             kernel.Bind<IStatsGenerator>().To<StatsGenerator>().InSingletonScope();
             kernel.Bind<ISaveGameRepository>().To<FileSystemSaveGameRepository>().InSingletonScope();
-            kernel.Bind<IFileAccess>().To<FileAccess>().WhenInjectedInto<AESFileAccess>();
-            kernel.Bind<IFileAccess>().To<AESFileAccess>();
+            kernel.Bind<IFileAccess>().ToConstant<AESFileAccess>(new AESFileAccess(new FileAccess(), disableEncryption));
             kernel.Bind<GameWorld>().ToSelf().InSingletonScope();
             kernel.Bind<IActionSelector>().To<MonsterActionSelector>().InSingletonScope();
             kernel.Bind<ICombatantSelector>().To<CombatantSelector>().InSingletonScope();
