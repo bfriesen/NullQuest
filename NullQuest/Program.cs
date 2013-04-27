@@ -45,7 +45,8 @@ namespace NullQuest
             kernel.Bind<IDice>().To<Dice>().InSingletonScope();
             kernel.Bind<IStatsGenerator>().To<StatsGenerator>().InSingletonScope();
             kernel.Bind<ISaveGameRepository>().To<FileSystemSaveGameRepository>().InSingletonScope();
-            kernel.Bind<IFileAccess>().To<FileAccess>();
+            kernel.Bind<IFileAccess>().To<FileAccess>().WhenInjectedInto<AESFileAccess>();
+            kernel.Bind<IFileAccess>().To<AESFileAccess>();
             kernel.Bind<GameWorld>().ToSelf().InSingletonScope();
             kernel.Bind<IActionSelector>().To<MonsterActionSelector>().InSingletonScope();
             kernel.Bind<ICombatantSelector>().To<CombatantSelector>().InSingletonScope();
