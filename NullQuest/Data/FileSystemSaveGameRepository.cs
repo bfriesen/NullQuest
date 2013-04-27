@@ -37,6 +37,7 @@ namespace NullQuest.Data
         {
             if (!File.Exists(_path))
             {
+		Directory.CreateDirectory(Path.GetDirectoryName(_path));
                 _savedGames = CreateEmptySaveGameData();
             }
             else
