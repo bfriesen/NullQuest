@@ -1,12 +1,10 @@
-﻿using NullQuest.Game;
+﻿using System.Threading;
+using NullQuest.Game;
 using NullQuest.Game.Effects;
 using NullQuest.Game.Items;
 using NullQuest.Game.Spells;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using XSerializer;
 
 namespace NullQuest.Data
@@ -87,17 +85,52 @@ namespace NullQuest.Data
 
         private SaveGameData[] LoadSaveGameData()
         {
-            using (var reader = _fileAccess.CreateReader())
+            var i = 0;
+
+            while (true)
             {
-                return _serializer.Deserialize(reader);
+                try
+                {
+                    using (var reader = _fileAccess.CreateReader())
+                    {
+                        return _serializer.Deserialize(reader);
+                    }
+                }
+                catch
+                {
+                    Thread.Sleep(1);
+
+                    if (++i > 10)
+                    {
+                        throw;
+                    }
+                }
             }
         }
 
         private void Persist(SaveGameData[] savedGames)
         {
-            using (var writer = _fileAccess.CreateWriter())
+            var i = 0;
+
+            while (true)
             {
-                _serializer.Serialize(writer, savedGames);
+                try
+                {
+                    using (var writer = _fileAccess.CreateWriter())
+                    {
+                        _serializer.Serialize(writer, savedGames);
+                        return;
+                    }
+                }
+                catch
+                {
+                    Thread.Sleep(1);
+
+                    if (++i > 10)
+                    {
+                        throw;
+                    }
+                }
             }
         }
     }
